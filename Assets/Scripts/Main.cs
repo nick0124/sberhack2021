@@ -11,15 +11,18 @@ public class Main : MonoBehaviour
 	private PlayerData playerData;
 
 	[SerializeField]
+	private PlayerData[] playersData;
+
+	[SerializeField]
 	private PlayerStats playerStats;
 
     // Start is called before the first frame update
     void Start()
     {
 		//InvokeRepeating("LoadData", 10f, 10f);
-		FirstLoad();
+		//FirstLoad();
 
-		string url = "http://localhost/sbergame/test.php";
+		string url = "http://hakasb.ru/getPlayer.php";
 		WWW www = new WWW(url);
 		StartCoroutine(WaitForRequest(www));
 	}
@@ -73,6 +76,10 @@ public class Main : MonoBehaviour
 		// check for errors
 		if (www.error == null) {
 			Debug.Log("WWW Result!: " + www.text);// contains all the data sent from the server
+			playersData = JsonHelper.getJsonArray<PlayerData>(www.text);
+			player.SetPlayerData(playersData[0]);
+			player.SetPos(playersData[0].currentWaypoint);
+			playerStats.updateData(playersData[0]);
 		} else {
 			Debug.Log("WWW Error: " + www.error);
 		}
