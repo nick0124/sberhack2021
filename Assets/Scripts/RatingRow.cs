@@ -1,18 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class RatingRow : MonoBehaviour
 {
 	[SerializeField]
-	private Text placeText;
+	private TMP_Text placeText;
 
 	[SerializeField]
-	private Text nameText;
+	private TMP_Text nameText;
 
 	[SerializeField]
-	private Text scoreText;
+	private TMP_Text scoreText;
 
 	// Start is called before the first frame update
 	void Start()

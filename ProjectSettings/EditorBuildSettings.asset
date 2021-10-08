@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/rating.unity
     guid: 9c923ab7998b33c4191895716ff5ba1b
+  - enabled: 1
+    path: Assets/Scenes/chest.unity
+    guid: 304e77becf56e9d47b07415be571c96b
   m_configObjects: {}

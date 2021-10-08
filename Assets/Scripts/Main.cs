@@ -16,6 +16,9 @@ public class Main : MonoBehaviour
 	[SerializeField]
 	private PlayerStats playerStats;
 
+	[SerializeField]
+	private GameObject chestButton;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -65,9 +68,15 @@ public class Main : MonoBehaviour
 			"\"acw\":\"2\"," +
 			"\"refuse\":\"3\"}";
 
-		playerData = JsonUtility.FromJson<PlayerData>(json);
+		if(playerData.currentWaypoint < 11) {
+			playerData.currentWaypoint++;
+		}
+		PlayerData aaa = JsonUtility.FromJson<PlayerData>(json);
+		if (playerData.currentWaypoint == 11) {
+			chestButton.SetActive(true);
+		}
 		player.SetPlayerData(playerData);
-		playerStats.updateData(playerData);
+		playerStats.updateData(aaa);
 	}
 
 	IEnumerator WaitForRequest(WWW www) {

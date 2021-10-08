@@ -16,8 +16,12 @@ public class Rating : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
     {
-		FirstLoad();
-    }
+		//FirstLoad();
+
+		string url = "http://hakasb.ru/scoreboard.php";
+		WWW www = new WWW(url);
+		StartCoroutine(WaitForRequest(www));
+	}
 
     // Update is called once per frame
     void Update()
@@ -49,6 +53,22 @@ public class Rating : MonoBehaviour
 		//player.SetPlayerData(playerData);
 		//player.SetPos(playerData.currentWaypoint);
 		//playerStats.updateData(playerData);
+	}
+
+	IEnumerator WaitForRequest(WWW www) {
+		yield return www;
+
+		// check for errors
+		if (www.error == null) {
+			Debug.Log("WWW Result!: " + www.text);// contains all the data sent from the server
+			ratingData = JsonHelper.getJsonArray<RatingData>(www.text);
+			for (int i = 0; i < ratingData.Length; i++) {
+				GameObject ratingRowInstance = Instantiate(rowPrefab, container.transform);
+				ratingRowInstance.GetComponent<RatingRow>().SetData(ratingData[i]);
+			}
+		} else {
+			Debug.Log("WWW Error: " + www.error);
+		}
 	}
 
 
